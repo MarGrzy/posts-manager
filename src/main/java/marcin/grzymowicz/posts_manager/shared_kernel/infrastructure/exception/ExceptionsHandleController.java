@@ -1,5 +1,6 @@
 package marcin.grzymowicz.posts_manager.shared_kernel.infrastructure.exception;
 
+import marcin.grzymowicz.posts_manager.shared_kernel.domain.custom_exception.EntityNotFoundException;
 import marcin.grzymowicz.posts_manager.shared_kernel.domain.custom_exception.ResourceNotFoundException;
 import org.junit.platform.commons.util.ExceptionUtils;
 import org.springframework.core.Ordered;
@@ -34,6 +35,13 @@ public class ExceptionsHandleController {
     @ResponseBody
     @ExceptionHandler(value = {NoHandlerFoundException.class})
     public ResponseEntity<Object> noHandlerFoundException(NoHandlerFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(), ExceptionUtils.readStackTrace(ex)));
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = {EntityNotFoundException.class})
+    public ResponseEntity<Object> entityNotFoundException(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
                 body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(), ExceptionUtils.readStackTrace(ex)));
     }

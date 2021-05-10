@@ -1,10 +1,12 @@
 package marcin.grzymowicz.posts_manager.posts.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
@@ -17,21 +19,20 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "body")
     private String body;
 
-    @Column(name = "userId")
+    @JsonIgnore
+    private LocalDateTime updatedAt;
+
+    @JsonIgnore
+    private Boolean isDeleted = Boolean.FALSE;
+
+    @JsonIgnore
     private Long userId;
 
-    @Override
-    public String toString() {
-        return "Post {" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", body='" + body + '\'' +
-                '}';
+    public void update() {
+        this.updatedAt = LocalDateTime.now();
     }
 }
