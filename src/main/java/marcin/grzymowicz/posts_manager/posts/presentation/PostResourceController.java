@@ -13,7 +13,7 @@ public class PostResourceController {
 
     private final GetPostsToDatabaseHandler getPostsToDatabaseHandler;
 
-    @GetMapping("/posts")
+    @GetMapping("/external-api-posts")
     public Boolean getPostsToDatabase() {
         return getPostsToDatabaseHandler.handle();
     }
