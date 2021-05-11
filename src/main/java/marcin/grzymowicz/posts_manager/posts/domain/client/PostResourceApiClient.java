@@ -14,9 +14,9 @@ import java.util.Objects;
 @Service
 public class PostResourceApiClient {
 
+    private final RestTemplate restTemplate;
     @Value("${posts.resource.api.url}")
     private String apiUrl;
-    private final RestTemplate restTemplate;
 
     @Autowired
     public PostResourceApiClient(RestTemplate restTemplate) {

@@ -22,27 +22,31 @@ public class ExceptionsHandleController {
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(), ExceptionUtils.readStackTrace(ex)));
+                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(),
+                                      ExceptionUtils.readStackTrace(ex)));
     }
 
     @ResponseBody
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<?> handleInternalException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
-                body(new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now(), ex.getMessage(), ExceptionUtils.readStackTrace(ex)));
+                body(new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, LocalDateTime.now(), ex.getMessage(),
+                                      ExceptionUtils.readStackTrace(ex)));
     }
 
     @ResponseBody
     @ExceptionHandler(value = {NoHandlerFoundException.class})
     public ResponseEntity<Object> noHandlerFoundException(NoHandlerFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(), ExceptionUtils.readStackTrace(ex)));
+                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(),
+                                      ExceptionUtils.readStackTrace(ex)));
     }
 
     @ResponseBody
     @ExceptionHandler(value = {EntityNotFoundException.class})
     public ResponseEntity<Object> entityNotFoundException(EntityNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).
-                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(), ExceptionUtils.readStackTrace(ex)));
+                body(new ErrorMessage(HttpStatus.NOT_FOUND, LocalDateTime.now(), ex.getMessage(),
+                                      ExceptionUtils.readStackTrace(ex)));
     }
 }
