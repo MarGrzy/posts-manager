@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/posts")
@@ -22,7 +23,7 @@ public class PostController {
     @GetMapping(value = "/list")
     public ResponseEntity<List<Post>> getList(@RequestParam(required = false) String title) {
         List<Post> posts = getPostsListHandler.handle(title);
-        return (posts == null || posts.isEmpty()) ?
+        return (Objects.isNull(posts) || posts.isEmpty()) ?
                 new ResponseEntity<>(HttpStatus.NO_CONTENT) :
                 ResponseEntity.ok(posts);
     }
