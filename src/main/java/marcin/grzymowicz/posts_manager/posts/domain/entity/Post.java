@@ -2,15 +2,17 @@ package marcin.grzymowicz.posts_manager.posts.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Post {
@@ -35,4 +37,6 @@ public class Post {
     public void update() {
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void delete() { this.isDeleted = Boolean.TRUE; }
 }

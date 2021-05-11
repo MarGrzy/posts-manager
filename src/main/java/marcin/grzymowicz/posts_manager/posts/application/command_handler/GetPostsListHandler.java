@@ -17,7 +17,9 @@ public class GetPostsListHandler {
     public List<Post> handle(String title) {
         List<Post> posts = new ArrayList<Post>();
 
-        posts = (title == null) ? postRepository.findAll() : postRepository.findByTitleContaining(title);
+        posts = (title == null)
+                ? postRepository.findAllByIsDeletedIsFalse()
+                : postRepository.findByTitleContainingAndIsDeletedIsFalse(title);
 
         return posts;
     }
