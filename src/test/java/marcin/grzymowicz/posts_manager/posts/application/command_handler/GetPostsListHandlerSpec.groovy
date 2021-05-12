@@ -1,6 +1,5 @@
-package marcin.grzymowicz.posts_manager.posts.application.handler
+package marcin.grzymowicz.posts_manager.posts.application.command_handler
 
-import marcin.grzymowicz.posts_manager.posts.application.command_handler.GetPostsListHandler
 import marcin.grzymowicz.posts_manager.posts.domain.entity.Post
 import marcin.grzymowicz.posts_manager.posts.domain.repository.PostRepository
 import spock.lang.Specification
@@ -22,7 +21,7 @@ class GetPostsListHandlerSpec extends Specification {
         when:
         List<Post> result = getPostsListHandler.handle(null)
         then:
-        1 * postRepository.findAll() >> posts
+        1 * postRepository.findAllByIsDeletedIsFalse() >> posts
         result == posts
     }
 
@@ -32,7 +31,7 @@ class GetPostsListHandlerSpec extends Specification {
         when:
         List<Post> result = getPostsListHandler.handle(title)
         then:
-        1 * postRepository.findByTitleContaining(title) >> posts
+        1 * postRepository.findByTitleContainingAndIsDeletedIsFalse(title) >> posts
         result == posts
     }
 }
