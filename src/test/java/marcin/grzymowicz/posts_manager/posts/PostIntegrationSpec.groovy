@@ -70,4 +70,28 @@ class PostIntegrationSpec extends Specification {
         "Null body"       || 1    || "test" || null          || 400        || [["Body cannot be null!"]]
         "Blank body"      || 1    || "test" || ""            || 400        || [["Body cannot be empty"]]
     }
+
+    @Unroll
+    def "should allow to update post"() {
+        given:
+        Map updatePostCmd = [
+                id   : id,
+                title: title,
+                body : body,
+        ]
+        when:
+        def result =
+                given()
+                        .accept(ContentType.JSON)
+                        .contentType(ContentType.JSON)
+                        .body(updatePostCmd)
+                        .when()
+                        .post("/api/posts/update")
+        then:
+        result.then().statusCode(statusCode)
+
+        where:
+        id || title  || body      || statusCode
+        1  || "test" || "Testing" || 200
+    }
 }
