@@ -27,12 +27,17 @@ public class PostsCyclicUpdater {
     @Scheduled(cron = "${entity-update.schedule-cron}")
     public void updatePosts() {
         List<Post> currentDataList = postRepository.findAllByIsDeletedIsFalseAndUpdatedAtIsNull();
-        List<Long> currentDataIds = currentDataList.stream().map(Post::getId).collect(Collectors.toList());
         List<Post> updateDataList = client.receivePostsListFromApi();
+        updateDataList = removeNoChangers(currentDataList, updateDataList);
+        postRepository.saveAll(updateDataList);
+        log.info("Posts are successfully updated at time {}", LocalTime.now());
+    }
+
+    private List<Post> removeNoChangers(List<Post> currentDataList, List<Post> updateDataList) {
+        List<Long> currentDataIds = currentDataList.stream().map(Post::getId).collect(Collectors.toList());
         updateDataList =
                 updateDataList.stream().filter(updateData -> currentDataIds.contains(
                         updateData.getId())).collect(Collectors.toList());
-        postRepository.saveAll(updateDataList);
-        log.info("Posts are successfully updated at time {}", LocalTime.now());
+        return updateDataList;
     }
 }
