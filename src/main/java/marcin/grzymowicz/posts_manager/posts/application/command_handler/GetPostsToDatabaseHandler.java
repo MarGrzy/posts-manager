@@ -6,7 +6,6 @@ import marcin.grzymowicz.posts_manager.posts.domain.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -21,7 +20,6 @@ public class GetPostsToDatabaseHandler {
         this.client = client;
     }
 
-    @Transactional
     public Boolean handle() {
         List<Post> posts = client.receivePostsListFromApi();
         if (posts.isEmpty()) { return Boolean.FALSE; }
