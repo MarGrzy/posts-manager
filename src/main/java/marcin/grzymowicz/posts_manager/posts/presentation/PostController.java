@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,7 +40,9 @@ public class PostController {
     }
 
     @PostMapping(value = "/delete/{id}")
-    public ResponseEntity<Boolean> delete(@PathVariable("id") @NotNull(message = "{id.notNull}") Long id)
+    public ResponseEntity<Boolean> delete(
+            @PathVariable("id") @NotNull(message = "{id.notNull}")
+            @Positive(message = "{id.positive}") Long id)
             throws EntityNotFoundException {
         return ResponseEntity.ok(deletePostHandler.handle(id));
     }
